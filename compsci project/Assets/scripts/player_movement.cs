@@ -39,8 +39,8 @@ public class player_movement : MonoBehaviour
         if (x_speed !=0) animator.SetBool("running",true);
         else animator.SetBool("running", false);
         
-        if (x_speed > 0) sr.flipX = true;
-        else  sr.flipX = false;
+        if (x_speed > 0) sr.flipX = false;
+        else  sr.flipX = true;
 
     }
 
