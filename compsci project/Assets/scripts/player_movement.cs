@@ -5,7 +5,14 @@ public class player_movement : MonoBehaviour
 {
     [SerializeField]  private float acceleration;
     [SerializeField]  private float jumpForce;
+    private float x_speed;
+    private float y_speed;
     private bool Grounded = true;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer sr;
+    private bool canDash=true;
+    private bool Dashing;
     
     void Start()
     {
@@ -13,24 +20,38 @@ public class player_movement : MonoBehaviour
     }
     void Update()
     {
-        Move();
-        Jump();
-        StartCoroutine(dash());
-       
+        if (!Dashing)
+        {
+            Move();
+            Jump();
+            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+            {
+                StartCoroutine(dash());
+            }
+        }
+
     }
     private void Move()
     {
-        transform.position += new Vector3(Input.GetAxisRaw("Horizontal") * acceleration * Time.deltaTime, 0, 0);
+        x_speed = Input.GetAxis("Horizontal") * acceleration;
+        rb.linearVelocity = new Vector2(x_speed, rb.linearVelocity.y);
+        
+        if (x_speed !=0) animator.SetBool("running",true);
+        else animator.SetBool("running", false);
+        
+        if (x_speed > 0) sr.flipX = true;
+        else  sr.flipX = false;
+
     }
 
     private void Jump()
     {
         if (Input.GetButtonDown("Jump") && Grounded)
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             Grounded = false;
         }
-    }
+    } 
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -42,9 +63,14 @@ public class player_movement : MonoBehaviour
 
     private IEnumerator dash()
     {
-        while(true){
-            yield return new WaitForSeconds(1);
-            if(Input.GetKeyDown(KeyCode.LeftShift))GetComponent<Rigidbody2D>().AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
-        }
+        canDash = false;
+        Dashing = true;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(x_speed*2, 0);
+        yield return new WaitForSeconds(0.2f);
+        Dashing = false;
+        rb.gravityScale =1f;
+        yield return new WaitForSeconds(1);
+        canDash = true;
     }
 }
