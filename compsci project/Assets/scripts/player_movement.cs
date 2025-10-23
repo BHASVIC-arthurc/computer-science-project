@@ -15,9 +15,17 @@ public class player_movement : MonoBehaviour
     private bool canDash=true;
     private bool Dashing;
     
+    private GameObject room_controller;
+    private room_controller room_controller_script;
+
+    void Start()
+    {
+        room_controller = GameObject.FindWithTag("room_controller");
+        room_controller_script = room_controller.GetComponent<room_controller>();
+    }
     void Update()
     {
-        //first thing the code checks is if the player is on the ground
+        //the first thing the code check is if the player is on the ground
         isGrounded();
         //this stops the player from changing anything when the player is dashing
         if (!Dashing)
@@ -35,7 +43,7 @@ public class player_movement : MonoBehaviour
     }
     private void Move()
     {
-        //sets x_speed to acceleration timsed by the direction your facing
+        //sets x_speed to acceleration timsed by the direction you're facing
         x_speed = Input.GetAxis("Horizontal") * acceleration;
         //sets the speed of the player to the new x_speed
         rb.linearVelocity = new Vector2(x_speed, rb.linearVelocity.y);
@@ -90,5 +98,37 @@ public class player_movement : MonoBehaviour
         yield return new WaitForSeconds(1);
         //allows player to dash again
         canDash = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("jump_boost"))
+        {
+            jumpForce = 16f;
+        }
+
+        if (collision.gameObject.CompareTag("door"))
+        {
+            door_transport exit_script = collision.gameObject.GetComponent<door_transport>();
+            if(exit_script.getTargetDoor() == null)
+            {room_controller_script.exit_room(collision.gameObject);}
+            else 
+                MoveTo(exit_script.getTargetDoor().transform.position);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("jump_boost"))
+        {
+            jumpForce = 11.1f;
+        }
+    }
+
+    public void MoveTo(Vector3 target)
+    {
+        target=new Vector3(target.x,target.y,-1);;
+        transform.position = target;
+
     }
 }

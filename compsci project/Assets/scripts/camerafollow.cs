@@ -12,8 +12,8 @@ public class camerafollow : MonoBehaviour
 
    private void Start()
    {
-       GameObject obj = GameObject.Find("room_1");
-       room_variables numbers = obj.GetComponent<room_variables>();
+       // GameObject obj = GameObject.Find("room_1");
+       // room_variables numbers = obj.GetComponent<room_variables>();
    }
     void Update()
     {

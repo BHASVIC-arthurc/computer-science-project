@@ -1,12 +1,29 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class temp_platform : MonoBehaviour
 {
-    [SerializeField] private LayerMask player;
-    void Update()
+    //collider of the platform goes here
+    [SerializeField] private BoxCollider2D box;
+    [SerializeField] private SpriteRenderer sr;
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        print(Physics2D.OverlapCapsule(new Vector2(transform.position.x,transform.position.y+0.5f),new Vector2(1,0.5f),CapsuleDirection2D.Horizontal,player));
-        if(Physics2D.OverlapCapsule(new Vector2(transform.position.x,transform.position.y+0.5f),new Vector2(1,0.5f),CapsuleDirection2D.Horizontal,player)!=null)
-            Destroy(this.gameObject);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(break_platform());
+        }
+    }
+    
+    private IEnumerator break_platform()
+    {
+        yield return new WaitForSeconds(1f);
+        //turns off the platform
+        box.enabled = false;
+        sr.enabled = false;
+        yield return new WaitForSeconds(1f);
+        //turns on the platform
+        box.enabled = true;
+        sr.enabled = true;
     }
 }

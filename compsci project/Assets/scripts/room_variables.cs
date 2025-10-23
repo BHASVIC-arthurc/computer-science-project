@@ -2,22 +2,14 @@ using UnityEngine;
 
 public class room_variables : MonoBehaviour
 {
-    [SerializeField] private int left, right, top, bottom;
+    [SerializeField] private int width, height;
+    [SerializeField] private GameObject[] doorReference;
 
-    public int GetLeft()
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+    public GameObject GetDoorReference(int index)
     {
-        return left;
+        return doorReference[index];
     }
-    public int GetRight()
-    {
-        return right;
-    }
-    public int GetTop()
-    {
-        return top;
-    }
-    public int GetBottom()
-    {
-        return bottom;
-    }
+    
 }
