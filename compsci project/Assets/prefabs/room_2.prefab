@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2872559314772415251}
   - component: {fileID: 1161720285061765348}
   - component: {fileID: 8890855259502168820}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: door_3
   m_TagString: door
   m_Icon: {fileID: 0}
@@ -282,6 +282,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: Bottom Right
+  door_layer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1482327935554522383
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +719,7 @@ GameObject:
   - component: {fileID: 8142684855910981492}
   - component: {fileID: 7058881041407572338}
   - component: {fileID: 3181572772845199387}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: door_0
   m_TagString: door
   m_Icon: {fileID: 0}
@@ -852,6 +855,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: Top Left
+  door_layer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &3201765774584741272
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,7 +2359,7 @@ GameObject:
   - component: {fileID: 2151363204522967669}
   - component: {fileID: 7487098314312738586}
   - component: {fileID: 6628614488964350817}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: door_1
   m_TagString: door
   m_Icon: {fileID: 0}
@@ -2489,6 +2495,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: Top Right
+  door_layer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &6969228898548205521
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,7 +3153,7 @@ GameObject:
   - component: {fileID: 9189221756656750256}
   - component: {fileID: 8655287194520544959}
   - component: {fileID: 5245067246583221240}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: door_2
   m_TagString: door
   m_Icon: {fileID: 0}
@@ -3280,3 +3289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: Bottom Left
+  door_layer:
+    serializedVersion: 2
+    m_Bits: 512

@@ -40,19 +40,31 @@ private void Start()
             switch (exit_door_script.getDoorType())
             {
                 case "Top Left":
-                    spawn_location = new Vector3(spawn_location.x-room_width/2,spawn_location.y+room_height/2-2,spawn_location.z);
+                    spawn_location = new Vector3(
+                        spawn_location.x-room_width/2-0.5f,
+                        spawn_location.y+room_height/2,
+                        spawn_location.z);
                    
                     break;
                 case "Top Right":
-                    spawn_location = new Vector3(spawn_location.x+room_width/2,spawn_location.y+room_height/2-2,spawn_location.z);
+                    spawn_location = new Vector3(
+                        spawn_location.x+room_width/2+0.5f,
+                        spawn_location.y+room_height/2,
+                        spawn_location.z);
                    
                     break;
                 case "Bottom Left":
-                    spawn_location = new Vector3(spawn_location.x-room_width/2,spawn_location.y-room_height/2+3,spawn_location.z);
+                    spawn_location = new Vector3(
+                        spawn_location.x-room_width/2-0.5f,
+                        spawn_location.y-room_height/2+5,
+                        spawn_location.z);
                     
                     break;
                 case "Bottom Right":
-                    spawn_location = new Vector3(spawn_location.x+room_width/2,spawn_location.y-room_height/2+3,spawn_location.z);
+                    spawn_location = new Vector3(
+                        spawn_location.x+room_width/2+0.5f,
+                        spawn_location.y-room_height/2+5,
+                        spawn_location.z);
                     
                     break;
                         
@@ -79,7 +91,6 @@ private void Start()
     {
         door_transport exit_script = exit.GetComponent<door_transport>();
         door_transport entrance_script = entrance.GetComponent<door_transport>();
-        
         exit_script.setTargetDoor(entrance);
         entrance_script.setTargetDoor(exit);
     }
