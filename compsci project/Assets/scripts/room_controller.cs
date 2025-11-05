@@ -27,7 +27,7 @@ private void Start()
     private GameObject new_room(GameObject exit_door)
     {
         Vector3 spawn_location= new Vector3(0,0,0);
-        room_prefab= room_reference[Random.Range(0,1)];
+        room_prefab= room_reference[Random.Range(0,3)];
         room_script = room_prefab.GetComponent<room_variables>();
         
         if (exit_door != null)
@@ -41,29 +41,29 @@ private void Start()
             {
                 case "Top Left":
                     spawn_location = new Vector3(
-                        spawn_location.x-room_width/2-0.5f,
-                        spawn_location.y+room_height/2,
+                        spawn_location.x-(room_width+1)/2,
+                        spawn_location.y+(room_height-4)/2,
                         spawn_location.z);
                    
                     break;
                 case "Top Right":
                     spawn_location = new Vector3(
-                        spawn_location.x+room_width/2+0.5f,
-                        spawn_location.y+room_height/2,
+                        spawn_location.x+(room_width+1)/2,
+                        spawn_location.y+(room_height-4)/2,
                         spawn_location.z);
                    
                     break;
                 case "Bottom Left":
                     spawn_location = new Vector3(
-                        spawn_location.x-room_width/2-0.5f,
-                        spawn_location.y-room_height/2+5,
+                        spawn_location.x-(room_width+1)/2,
+                        spawn_location.y-(room_height-4)/2,
                         spawn_location.z);
                     
                     break;
                 case "Bottom Right":
                     spawn_location = new Vector3(
-                        spawn_location.x+room_width/2+0.5f,
-                        spawn_location.y-room_height/2+5,
+                        spawn_location.x+ (room_width+1)/2,
+                        spawn_location.y-(room_height-4)/2,
                         spawn_location.z);
                     
                     break;
