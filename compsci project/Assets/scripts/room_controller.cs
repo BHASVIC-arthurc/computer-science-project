@@ -15,7 +15,11 @@ public class room_controller : MonoBehaviour
     private GameObject room_prefab;
     private GameObject target_door;
     private GameObject entrance_door;
-    [SerializeField] private Vector3 room_entrance_pos;
+    private bool can_place;
+    private int random_room;
+    private Vector3 room_entrance_pos;
+    private int count = 0;
+    [SerializeField] private LayerMask room_layer;
 
 private void Start()
     {
@@ -23,64 +27,79 @@ private void Start()
         player_script = player.GetComponent<player_movement>();
         new_room(null);
     }
-    
+
     private GameObject new_room(GameObject exit_door)
     {
-        Vector3 spawn_location= new Vector3(0,0,0);
-        room_prefab= room_reference[Random.Range(0,3)];
-        room_script = room_prefab.GetComponent<room_variables>();
-        
-        if (exit_door != null)
-        { 
-            float room_width = room_script.getWidth();
-            float room_height = room_script.getHeight();
-            door_transport exit_door_script=exit_door.GetComponent<door_transport>();
-            Vector3 exit_pos = exit_door.transform.position;
-            spawn_location = exit_pos;
-            switch (exit_door_script.getDoorType())
-            {
-                case "Top Left":
-                    spawn_location = new Vector3(
-                        spawn_location.x-(room_width+1)/2,
-                        spawn_location.y+(room_height-4)/2,
-                        spawn_location.z);
-                   
-                    break;
-                case "Top Right":
-                    spawn_location = new Vector3(
-                        spawn_location.x+(room_width+1)/2,
-                        spawn_location.y+(room_height-4)/2,
-                        spawn_location.z);
-                   
-                    break;
-                case "Bottom Left":
-                    spawn_location = new Vector3(
-                        spawn_location.x-(room_width+1)/2,
-                        spawn_location.y-(room_height-4)/2,
-                        spawn_location.z);
-                    
-                    break;
-                case "Bottom Right":
-                    spawn_location = new Vector3(
-                        spawn_location.x+ (room_width+1)/2,
-                        spawn_location.y-(room_height-4)/2,
-                        spawn_location.z);
-                    
-                    break;
-                        
-            }
-        }
-        current_room =  Instantiate(room_prefab,spawn_location,room_prefab.transform.rotation);
-        room_script = current_room.GetComponent<room_variables>();
-        if (exit_door != null)
+        Vector3 spawn_location;
+        count = 0;
+        do
         {
-            entrance_door = room_script.GetDoorReference(getOppositeDoor(exit_door));
-        }
-        else return null;
-        player_script.MoveTo(entrance_door.transform.position);
-        return entrance_door;
+            spawn_location = new Vector3(0, 0, 0);
+            random_room = Random.Range(0, 3);
+            room_prefab = room_reference[random_room];
+            room_script = room_prefab.GetComponent<room_variables>();
+            if (exit_door != null)
+            {
+                float room_width = room_script.getWidth();
+                float room_height = room_script.getHeight();
+                door_transport exit_door_script = exit_door.GetComponent<door_transport>();
+                Vector3 exit_pos = exit_door.transform.position;
+                spawn_location = exit_pos;
+                switch (exit_door_script.getDoorType())
+                {
+                    case "Top Left":
+                        spawn_location = new Vector3(
+                            spawn_location.x - (room_width + 1) / 2,
+                            spawn_location.y + (room_height - 4) / 2,
+                            spawn_location.z);
+
+                        break;
+                    case "Top Right":
+                        spawn_location = new Vector3(
+                            spawn_location.x + (room_width + 1) / 2,
+                            spawn_location.y + (room_height - 4) / 2,
+                            spawn_location.z);
+
+                        break;
+                    case "Bottom Left":
+                        spawn_location = new Vector3(
+                            spawn_location.x - (room_width + 1) / 2,
+                            spawn_location.y - (room_height - 4) / 2,
+                            spawn_location.z);
+
+                        break;
+                    case "Bottom Right":
+                        spawn_location = new Vector3(
+                            spawn_location.x + (room_width + 1) / 2,
+                            spawn_location.y - (room_height - 4) / 2,
+                            spawn_location.z);
+
+                        break;
+
+                }
+
+                can_place = !Physics2D.OverlapArea(
+                    new Vector2(spawn_location.x + room_width / 2, spawn_location.y + room_height / 2),
+                    new Vector2(spawn_location.x - room_width / 2, spawn_location.y - room_height / 2),
+                    room_layer);
+              
+            }
+            count++;
+            print(count);
+        } while ((!can_place || count==20)&&exit_door!=null);
+
+        current_room = Instantiate(room_prefab, spawn_location, room_prefab.transform.rotation);
+            room_script = current_room.GetComponent<room_variables>();
+            if (exit_door != null)
+            {
+                entrance_door = room_script.GetDoorReference(getOppositeDoor(exit_door));
+            }
+            else return null;
+
+            player_script.MoveTo(entrance_door.transform.position);
+            return entrance_door;
     }
-    
+
     public void exit_room(GameObject exit_door)
     {
         link_doors(exit_door,new_room(exit_door));

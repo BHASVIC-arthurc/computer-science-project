@@ -6,11 +6,20 @@ public class door_transport : MonoBehaviour
     [SerializeField] private GameObject target_door;
     [SerializeField] private String doorType;
     [SerializeField] LayerMask door_layer;
+    [SerializeField] LayerMask wall_layer;
+    BoxCollider2D box;
+    SpriteRenderer sr;
 
 
     void Start()
-    {
-        
+    {   
+        box = GetComponent<BoxCollider2D>();
+        sr=GetComponent<SpriteRenderer>();
+        if (Physics2D.OverlapCircle(transform.position, 0.5f, wall_layer))
+        {
+            box.isTrigger = false;
+            sr.color=Color.white;
+        }
         GameObject room_controller = GameObject.FindWithTag("room_controller");
         room_controller room_controller_script = room_controller.GetComponent<room_controller>();
         

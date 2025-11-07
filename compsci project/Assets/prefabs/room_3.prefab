@@ -152,6 +152,10 @@ MonoBehaviour:
   door_layer:
     serializedVersion: 2
     m_Bits: 512
+  wall_layer:
+    serializedVersion: 2
+    m_Bits: 64
+  box: {fileID: 8216112912064071156}
 --- !u!1 &321093797895193114
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,6 +3193,10 @@ MonoBehaviour:
   door_layer:
     serializedVersion: 2
     m_Bits: 512
+  wall_layer:
+    serializedVersion: 2
+    m_Bits: 64
+  box: {fileID: 5499944534435551724}
 --- !u!1 &6713416327581369334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,6 +3503,10 @@ MonoBehaviour:
   door_layer:
     serializedVersion: 2
     m_Bits: 512
+  wall_layer:
+    serializedVersion: 2
+    m_Bits: 64
+  box: {fileID: 3050685734575932689}
 --- !u!1 &6912430571894533677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,6 +3947,10 @@ MonoBehaviour:
   door_layer:
     serializedVersion: 2
     m_Bits: 512
+  wall_layer:
+    serializedVersion: 2
+    m_Bits: 64
+  box: {fileID: 3942695036491354558}
 --- !u!1 &8237506083535275494
 GameObject:
   m_ObjectHideFlags: 0
