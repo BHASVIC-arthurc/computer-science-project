@@ -1,6 +1,6 @@
-using System;
+
 using UnityEngine;
-public class camerafollow : MonoBehaviour
+public class Camerafollow : MonoBehaviour
 {
    [SerializeField]
    //this is the object the camera will follow
@@ -9,12 +9,7 @@ public class camerafollow : MonoBehaviour
    [SerializeField]
    //this is the furthest it will go in all directions
    private int maxx,minx,maxy, miny;
-
-   private void Start()
-   {
-       // GameObject obj = GameObject.Find("room_1");
-       // room_variables numbers = obj.GetComponent<room_variables>();
-   }
+   
     void Update()
     {
         wantedPosition = target.localPosition;

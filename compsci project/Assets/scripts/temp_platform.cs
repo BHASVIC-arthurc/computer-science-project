@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-public class temp_platform : MonoBehaviour
+public class TempPlatform : MonoBehaviour
 {
     //collider of the platform goes here
     [SerializeField] private BoxCollider2D box;

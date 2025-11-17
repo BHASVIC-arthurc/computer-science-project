@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class player_movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]  private float acceleration;
     [SerializeField]  private float jumpForce;
@@ -9,34 +9,34 @@ public class player_movement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private LayerMask groundLayer;
-    private float x_speed;
-    private float y_speed;
-    private bool Grounded = true;
+    private float xSpeed;
+    private float ySpeed;
+    private bool grounded = true;
     private bool canDash=true;
-    private bool Dashing;
+    private bool dashing;
     
-    private GameObject room_controller;
-    private room_controller room_controller_script;
+    private GameObject roomController;
+    private RoomController roomControllerScript;
 
     void Start()
     {
-        room_controller = GameObject.FindWithTag("room_controller");
-        room_controller_script = room_controller.GetComponent<room_controller>();
+        roomController = GameObject.FindWithTag("room_controller");
+        roomControllerScript = roomController.GetComponent<RoomController>();
     }
     void Update()
     {
         //the first thing the code check is if the player is on the ground
-        isGrounded();
+        IsGrounded();
         //this stops the player from changing anything when the player is dashing
-        if (!Dashing)
+        if (!dashing)
         {
-            //runs both movescripts
+            //runs both move scripts
             Move();
             Jump();
             //checks for if you are able to dash
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             {
-                StartCoroutine(dash());
+                StartCoroutine(Dash());
             }
         }
 
@@ -44,54 +44,54 @@ public class player_movement : MonoBehaviour
     private void Move()
     {
         //sets x_speed to acceleration timsed by the direction you're facing
-        x_speed = Input.GetAxis("Horizontal") * acceleration;
+        xSpeed = Input.GetAxis("Horizontal") * acceleration;
         //sets the speed of the player to the new x_speed
-        rb.linearVelocity = new Vector2(x_speed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(xSpeed, rb.linearVelocity.y);
         
         //checks if the player is moving and starts the moving animation
-        if (x_speed != 0) animator.SetBool("running",true);
+        if (xSpeed != 0) animator.SetBool("running",true);
         else animator.SetBool("running", false);
         
         //sets the player to face the way they are moving
         //right
-        if (x_speed > 0) sr.flipX = false;
+        if (xSpeed > 0) sr.flipX = false;
         //left
-        else if (x_speed < 0) sr.flipX = true;
+        else if (xSpeed < 0) sr.flipX = true;
         //stays facing the same way with no input
 
     }
 
     private void Jump()
     {
-        if (Input.GetButtonDown("Jump") && Grounded)
+        if (Input.GetButtonDown("Jump") && grounded)
         {
             //sets the players vertical velocity to jumpForce
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            //says they arent on ground
-            Grounded = false;
+            //says they aren't on ground
+            grounded = false;
         }
     }
 
-    private void isGrounded()
+    private void IsGrounded()
     {
-        //returns true of the sphere made at the bottom of the charecter with a radius of the charecters feet overlaps with an object on the selected layer
-            Grounded = Physics2D.OverlapCircle(new Vector2(transform.position.x,transform.position.y-1.15f/2),0.6100233f/2,groundLayer);
+        //returns true of the sphere made at the bottom of the character with a radius of the characters feet overlaps with an object on the selected layer
+            grounded = Physics2D.OverlapCircle(new Vector2(transform.position.x,transform.position.y-1.15f/2),0.6100233f/2,groundLayer);
     }
 
-    private IEnumerator dash()
+    private IEnumerator Dash()
     {
         //stops player from double dashing
         canDash = false;
         //says they are dashing
-        Dashing = true;
+        dashing = true;
         //stops player from falling
         rb.gravityScale = 0f;
         //doubles there horizontal speed
-        rb.linearVelocity = new Vector2(x_speed*2, 0);
+        rb.linearVelocity = new Vector2(xSpeed*2, 0);
         //waits for dash to be over
         yield return new WaitForSeconds(0.2f);
         //stops dashing
-        Dashing = false;
+        dashing = false;
         //sets gravity back to normal
         rb.gravityScale =2f;
         //waits for dash cooldown
@@ -109,11 +109,11 @@ public class player_movement : MonoBehaviour
 
         if (collision.gameObject.CompareTag("door"))
         {
-            door_transport exit_script = collision.gameObject.GetComponent<door_transport>();
-            if(exit_script.getTargetDoor() == null)
-            {room_controller_script.exit_room(collision.gameObject);}
+            DoorTransport exitScript = collision.gameObject.GetComponent<DoorTransport>();
+            if(exitScript.GetTargetDoor() == null)
+            {roomControllerScript.exit_room(collision.gameObject);}
             else 
-                MoveTo(exit_script.getTargetDoor().transform.position);
+                MoveTo(exitScript.GetTargetDoor().transform.position);
         }
     }
 
@@ -127,7 +127,7 @@ public class player_movement : MonoBehaviour
 
     public void MoveTo(Vector3 target)
     {
-        target=new Vector3(target.x,target.y,-1);;
+        target=new Vector3(target.x,target.y,-1);
         transform.position = target;
 
     }

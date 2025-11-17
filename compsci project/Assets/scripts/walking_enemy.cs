@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class walking_enemy : MonoBehaviour
+public class WalkingEnemy : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     private int direction=1;

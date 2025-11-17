@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class door_transport : MonoBehaviour
+public class DoorTransport : MonoBehaviour
 {
-    [SerializeField] private GameObject target_door;
+    [FormerlySerializedAs("target_door")] [SerializeField] private GameObject targetDoor;
     [SerializeField] private String doorType;
-    [SerializeField] LayerMask door_layer;
-    [SerializeField] LayerMask wall_layer;
+    [FormerlySerializedAs("door_layer")] [SerializeField] LayerMask doorLayer;
+    [FormerlySerializedAs("wall_layer")] [SerializeField] LayerMask wallLayer;
     BoxCollider2D box;
     SpriteRenderer sr;
 
@@ -15,37 +16,41 @@ public class door_transport : MonoBehaviour
     {   
         box = GetComponent<BoxCollider2D>();
         sr=GetComponent<SpriteRenderer>();
-        if (Physics2D.OverlapCircle(transform.position, 0.5f, wall_layer))
+        GameObject roomController = GameObject.FindWithTag("room_controller");
+        RoomController roomControllerScript = roomController.GetComponent<RoomController>();
+        
+        if (Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, doorLayer))
+        {
+            
+            roomControllerScript.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, doorLayer).gameObject);
+        }
+        else if (Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, doorLayer))
+        {
+            roomControllerScript.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, doorLayer).gameObject);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 0.5f, wallLayer))
         {
             box.isTrigger = false;
             sr.color=Color.white;
         }
-        GameObject room_controller = GameObject.FindWithTag("room_controller");
-        room_controller room_controller_script = room_controller.GetComponent<room_controller>();
-        
-        if (Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, door_layer))
-        {
-            
-            room_controller_script.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, door_layer).gameObject);
-        }
-        else if (Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, door_layer))
-        {
-            room_controller_script.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, door_layer).gameObject);
-        }
     }
-    public String getDoorType()
+    public String GetDoorType()
     {
         return doorType;
     }
 
-    public GameObject getTargetDoor()
+    public GameObject GetTargetDoor()
     {
-        return target_door;
+        return targetDoor;
     }
 
-    public void setTargetDoor(GameObject door)
+    public void SetTargetDoor(GameObject door)
     {
-        target_door = door;
+        targetDoor = door;
     }
     
 

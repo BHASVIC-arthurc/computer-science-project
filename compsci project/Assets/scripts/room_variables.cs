@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class room_variables : MonoBehaviour
+public class RoomVariables : MonoBehaviour
 {
     [SerializeField] private int width, height;
     [SerializeField] private GameObject[] doorReference;
 
-    public int getWidth() { return width; }
-    public int getHeight() { return height; }
+    public int GetWidth() { return width; }
+    public int GetHeight() { return height; }
     public GameObject GetDoorReference(int index)
     {
         return doorReference[index];
