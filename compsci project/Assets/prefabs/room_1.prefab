@@ -215,15 +215,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec78164abc4325e4eb1efd6965debed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_door: {fileID: 0}
+  targetDoor: {fileID: 0}
   doorType: Bottom Left
-  door_layer:
+  doorLayer:
     serializedVersion: 2
     m_Bits: 512
-  wall_layer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  box: {fileID: 4209075672505748853}
 --- !u!1 &2463980890388091984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,15 +1155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec78164abc4325e4eb1efd6965debed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_door: {fileID: 0}
+  targetDoor: {fileID: 0}
   doorType: Top Left
-  door_layer:
+  doorLayer:
     serializedVersion: 2
     m_Bits: 512
-  wall_layer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  box: {fileID: 6843296865833797135}
 --- !u!1 &4848744102594633369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,15 +1464,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec78164abc4325e4eb1efd6965debed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_door: {fileID: 0}
+  targetDoor: {fileID: 0}
   doorType: Top Right
-  door_layer:
+  doorLayer:
     serializedVersion: 2
     m_Bits: 512
-  wall_layer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  box: {fileID: 3963979953576853432}
 --- !u!1 &5739705081921878269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,15 +1753,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec78164abc4325e4eb1efd6965debed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target_door: {fileID: 0}
+  targetDoor: {fileID: 0}
   doorType: Bottom Right
-  door_layer:
+  doorLayer:
     serializedVersion: 2
     m_Bits: 512
-  wall_layer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 64
-  box: {fileID: 1667544359316404384}
 --- !u!1 &6773793759862574966
 GameObject:
   m_ObjectHideFlags: 0

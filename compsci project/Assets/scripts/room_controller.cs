@@ -18,7 +18,7 @@ public class RoomController : MonoBehaviour
     private int randomRoom;
     private Vector3 roomEntrancePos;
     private int count;
-    [FormerlySerializedAs("room_layer")] [SerializeField] private LayerMask roomLayer;
+    [SerializeField] private LayerMask roomLayer;
 
 private void Start()
     {
@@ -49,7 +49,7 @@ private void Start()
                     case "Top Left":
                         spawnLocation = new Vector3(
                             spawnLocation.x - (roomWidth + 1) / 2,
-                            spawnLocation.y + (roomHeight - 4) / 2,
+                            spawnLocation.y + (roomHeight-4) / 2,
                             spawnLocation.z);
 
                         break;
@@ -76,23 +76,20 @@ private void Start()
                         break;
 
                 }
-                
                 canPlace = !Physics2D.OverlapArea(
-                    new Vector2(spawnLocation.x + roomWidth / 2, spawnLocation.y + roomHeight / 2),
-                    new Vector2(spawnLocation.x - roomWidth / 2, spawnLocation.y - roomHeight / 2),
+                    new Vector2(spawnLocation.x + roomWidth / 2-2, spawnLocation.y + roomHeight / 2-2),
+                    new Vector2(spawnLocation.x - roomWidth / 2+2, spawnLocation.y - roomHeight / 2+2),
                     roomLayer);
                 print((spawnLocation.x + roomWidth / 2, spawnLocation.y + roomHeight / 2));
                 print((spawnLocation.x - roomWidth / 2, spawnLocation.y - roomHeight / 2));
-              
+                print("can place: "+canPlace);
             }
             count++;
-            print("can place: "+canPlace);
-            print("count: "+ count);
-            print("exit door: "+ exitDoor);
-            print("statement: " + (!canPlace && count != 20 && exitDoor != null));
+            print(count);
         } while (!canPlace && count!=20 && exitDoor!=null);
 
-        currentRoom = Instantiate(roomPrefab, spawnLocation, roomPrefab.transform.rotation);
+        if (count!=20){
+            currentRoom = Instantiate(roomPrefab, spawnLocation, roomPrefab.transform.rotation);
             roomScript = currentRoom.GetComponent<RoomVariables>();
             if (exitDoor != null)
             {
@@ -102,6 +99,8 @@ private void Start()
 
             playerScript.MoveTo(entranceDoor.transform.position);
             return entranceDoor;
+        }
+        return null;
     }
 
     public void exit_room(GameObject exitDoor)

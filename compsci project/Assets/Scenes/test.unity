@@ -509,11 +509,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f078e36407f7fb84ba965e96b0d87c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  room_reference:
+  roomReference:
   - {fileID: 895781862546336533, guid: 6659094ec0239a74ca1734375dc2206b, type: 3}
   - {fileID: 3201765774584741272, guid: 1b391de8af7192b47912cb3ac38ea827, type: 3}
   - {fileID: 5288792713375884711, guid: 41bd53c41525e41409463f9826998afa, type: 3}
-  room_entrance_pos: {x: 0, y: 0, z: 0}
+  roomLayer:
+    serializedVersion: 2
+    m_Bits: 832
 --- !u!4 &1450872732
 Transform:
   m_ObjectHideFlags: 0
