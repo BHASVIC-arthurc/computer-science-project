@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class RoomController : MonoBehaviour
 {
-    [FormerlySerializedAs("room_reference")] [SerializeField] private GameObject[] roomReference;
+    [SerializeField] private GameObject[] roomReference;
 
     private GameObject player;
     private PlayerMovement playerScript;
@@ -77,15 +77,11 @@ private void Start()
 
                 }
                 canPlace = !Physics2D.OverlapArea(
-                    new Vector2(spawnLocation.x + roomWidth / 2-2, spawnLocation.y + roomHeight / 2-2),
-                    new Vector2(spawnLocation.x - roomWidth / 2+2, spawnLocation.y - roomHeight / 2+2),
+                    new Vector2(spawnLocation.x + roomWidth / 2-3, spawnLocation.y + roomHeight / 2-3),
+                    new Vector2(spawnLocation.x - roomWidth / 2+3, spawnLocation.y - roomHeight / 2+3),
                     roomLayer);
-                print((spawnLocation.x + roomWidth / 2, spawnLocation.y + roomHeight / 2));
-                print((spawnLocation.x - roomWidth / 2, spawnLocation.y - roomHeight / 2));
-                print("can place: "+canPlace);
             }
             count++;
-            print(count);
         } while (!canPlace && count!=20 && exitDoor!=null);
 
         if (count!=20){

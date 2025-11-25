@@ -42,11 +42,12 @@ Transform:
   - {fileID: 2685021114149390647}
   - {fileID: 1082968333740561658}
   - {fileID: 2563214680604173095}
+  - {fileID: 3786759504063632117}
   - {fileID: 1871014255278340285}
   - {fileID: 1302589564570946768}
   - {fileID: 4475188719420684342}
   - {fileID: 2751397435570457875}
-  - {fileID: 3786759504063632117}
+  - {fileID: 237797343792408933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3454815096456962285
@@ -2486,6 +2487,55 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &8033872895512015184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 237797343792408933}
+  - component: {fileID: 5135660043136001014}
+  m_Layer: 0
+  m_Name: doorController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &237797343792408933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033872895512015184}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.02965, y: 0.70131, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2119713730673421987}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5135660043136001014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033872895512015184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9021b22706f804ba08482b605e5e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorReference:
+  - {fileID: 4057211884476837496}
+  - {fileID: 4862773430806527452}
+  - {fileID: 1165380943736917473}
+  - {fileID: 6369227759473278650}
 --- !u!1 &8558970673522499283
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,7 +2563,7 @@ Transform:
   m_GameObject: {fileID: 8558970673522499283}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071057, w: 0.7071079}
-  m_LocalPosition: {x: 0, y: 0.87499857, z: 0}
+  m_LocalPosition: {x: 0, y: 0.87499857, z: 1}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
