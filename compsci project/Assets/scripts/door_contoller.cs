@@ -16,7 +16,9 @@ public class door_contoller : MonoBehaviour
             doorCode=doorReference[i].GetComponent<DoorTransport>();
             Targets[i]=doorCode.GetTargetDoor();
         }
-
+    }
+    private void Update()
+    {
         var multiples = checkForMultiples();
         if (multiples!=(null,null))
         {
@@ -40,7 +42,9 @@ public class door_contoller : MonoBehaviour
         {
             for (int j = i+1; j < doorReference.Length; j++)
             {
-                if (Targets[j] == doorReference[i])
+                print(i+" "+j);
+                print(Targets[j] + " " + Targets[i]);
+                if (Targets[j] == Targets[i] &&  Targets[i] != null)
                 {
                     return (doorReference[i], doorReference[j]);
                 }
