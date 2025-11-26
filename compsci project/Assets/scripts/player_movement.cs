@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,11 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private LayerMask groundLayer;
-    private float xSpeed;
-    private float ySpeed;
-    private bool grounded = true;
-    private bool canDash=true;
-    private bool dashing;
+    [SerializeField] private GameObject[] attacks;
+    //sword=1 axe=2 spear=3
+    private int equipedWeapon=1;
+    private float xSpeed,ySpeed,attackTimer;
+    private bool grounded = true,canDash=true,dashing;
     
     private GameObject roomController;
     private RoomController roomControllerScript;
@@ -25,6 +26,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        for (int i = 0; i < attacks.Length; i++)
+        {
+            attacks[i].GetComponent<Transform>().position.x = attacks[i].GetComponent<Transform>().position.x * -1;
+            attacks[i].GetComponent<Transform>().rotation.z = attacks[i].GetComponent<Transform>().rotation.z * -1;
+            attacks[i].GetComponent<Transform>().localScale.x = attacks[i].GetComponent<Transform>().localScale.x * -1;
+        }
         //the first thing the code check is if the player is on the ground
         IsGrounded();
         //this stops the player from changing anything when the player is dashing
@@ -37,6 +44,27 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             {
                 StartCoroutine(Dash());
+            }
+        }
+
+        //starts or continous attack timer
+        if (Input.GetMouseButton(0))
+        {
+            attackTimer+=1*Time.deltaTime;
+        }
+
+        //when released do a heavy or light attack
+        if (!Input.GetMouseButton(0))
+        {
+            if (attackTimer > 1)
+            {
+                attackTimer = 0;
+                StartCoroutine(heavyAttack());
+            }
+            else if (attackTimer > 0)
+            {
+                attackTimer = 0;
+                StartCoroutine(lightAttack());
             }
         }
 
@@ -130,5 +158,21 @@ public class PlayerMovement : MonoBehaviour
         target=new Vector3(target.x,target.y,-1);
         transform.position = target;
 
+    }
+
+    private IEnumerator lightAttack()
+    {
+        print("light attack");
+        attacks[equipedWeapon*2-2].SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        attacks[equipedWeapon*2-2].SetActive(false);
+    }
+    
+    private IEnumerator heavyAttack()
+    {
+        print("heavy attack");
+        attacks[equipedWeapon*2-1].SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        attacks[equipedWeapon*2-1].SetActive(false);
     }
 }

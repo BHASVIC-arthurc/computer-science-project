@@ -42,8 +42,6 @@ public class door_contoller : MonoBehaviour
         {
             for (int j = i+1; j < doorReference.Length; j++)
             {
-                print(i+" "+j);
-                print(Targets[j] + " " + Targets[i]);
                 if (Targets[j] == Targets[i] &&  Targets[i] != null)
                 {
                     return (doorReference[i], doorReference[j]);
