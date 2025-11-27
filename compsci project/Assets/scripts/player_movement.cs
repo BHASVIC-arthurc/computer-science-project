@@ -28,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
     {
         for (int i = 0; i < attacks.Length; i++)
         {
-            attacks[i].GetComponent<Transform>().position.x = attacks[i].GetComponent<Transform>().position.x * -1;
-            attacks[i].GetComponent<Transform>().rotation.z = attacks[i].GetComponent<Transform>().rotation.z * -1;
-            attacks[i].GetComponent<Transform>().localScale.x = attacks[i].GetComponent<Transform>().localScale.x * -1;
+            //attacks[i].GetComponent<Transform>().position.x = attacks[i].GetComponent<Transform>().position.x * -1;
+            //attacks[i].GetComponent<Transform>().rotation.z = attacks[i].GetComponent<Transform>().rotation.z * -1;
+            //attacks[i].GetComponent<Transform>().localScale.x = attacks[i].GetComponent<Transform>().localScale.x * -1;
         }
         //the first thing the code check is if the player is on the ground
         IsGrounded();
