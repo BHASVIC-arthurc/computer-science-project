@@ -28,7 +28,7 @@ public class GUIController : MonoBehaviour
 
     public void pause()
     {
-        //pauses game
+        //pauses game and opens menu
         isPaused=true;
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
@@ -37,7 +37,7 @@ public class GUIController : MonoBehaviour
     
     public void unpause()
     {
-        //unpauses game
+        //unpauses game and closes menu
         isPaused=false;
         Time.timeScale = 1;
         activeMenu.SetActive(false);

@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject[] attacks;
     //sword=1 axe=2 spear=3
-    private int equipedWeapon=1;
+    private int equipedWeapon=2;
     private float xSpeed,ySpeed,attackTimer;
     private bool grounded = true,canDash=true,dashing;
     
@@ -26,12 +26,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        for (int i = 0; i < attacks.Length; i++)
-        {
-            //attacks[i].GetComponent<Transform>().position.x = attacks[i].GetComponent<Transform>().position.x * -1;
-            //attacks[i].GetComponent<Transform>().rotation.z = attacks[i].GetComponent<Transform>().rotation.z * -1;
-            //attacks[i].GetComponent<Transform>().localScale.x = attacks[i].GetComponent<Transform>().localScale.x * -1;
-        }
         //the first thing the code check is if the player is on the ground
         IsGrounded();
         //this stops the player from changing anything when the player is dashing
@@ -91,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        //checks for button down and player is on the ground
         if (Input.GetButtonDown("Jump") && grounded)
         {
             //sets the players vertical velocity to jumpForce
@@ -130,11 +125,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //when you touch a jump boost object double jump force
         if (collision.gameObject.CompareTag("jump_boost"))
         {
             jumpForce = 16f;
         }
 
+        //when you touch a door object gets the target door and teleports the player to it
         if (collision.gameObject.CompareTag("door"))
         {
             DoorTransport exitScript = collision.gameObject.GetComponent<DoorTransport>();
@@ -147,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        //when you leave the jump boost object sets jump power back to normal
         if (collision.gameObject.CompareTag("jump_boost"))
         {
             jumpForce = 11.1f;
