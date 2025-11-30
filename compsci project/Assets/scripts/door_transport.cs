@@ -25,13 +25,16 @@ public class DoorTransport : MonoBehaviour
     void FixedUpdate()
     {
         canSpawn();
+        //every set amount of frames check if a room can be spawned from this door
         if (!canSpawn1 && !canSpawn2 && !canSpawn3 && targetDoor == null || Physics2D.OverlapCircle(transform.position, .5f, wallLayer))
         {
+            //if not close door
             sr.color = Color.white;
             box.isTrigger = false;
         }
         else
         {
+            //if can open door
             sr.color = Color.black;
             box.isTrigger = true;
         }
@@ -40,6 +43,7 @@ public class DoorTransport : MonoBehaviour
     }
     private void canSpawn()
     {
+        //checks for each door for each room if there is a wall within the area the room would be spawned
         canSpawn1 = true;
         canSpawn2 = true;
         canSpawn3 = true;
@@ -116,13 +120,16 @@ public class DoorTransport : MonoBehaviour
 
     public void link_adjacent()
     {
+        //gets the door contoller script
         GameObject roomController = GameObject.FindWithTag("room_controller");
         RoomController roomControllerScript = roomController.GetComponent<RoomController>();
+        //links door if its on the right of this door
         if (Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, doorLayer))
         {
             
             roomControllerScript.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x+1.5f,transform.position.y),0.25f, doorLayer).gameObject);
         }
+        //links to door on the left of this door
         else if (Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, doorLayer))
         {
             roomControllerScript.link_doors(gameObject,Physics2D.OverlapCircle(new Vector2(transform.position.x - 1.5f, transform.position.y), 0.25f, doorLayer).gameObject);

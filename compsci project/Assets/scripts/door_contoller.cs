@@ -10,7 +10,7 @@ public class door_contoller : MonoBehaviour
     private void Start()
     {
         Targets = new GameObject[doorReference.Length];
-        
+        //on start make a list of each doors target in a room
         for (int i = 0; i < doorReference.Length; i++)
         {
             doorCode=doorReference[i].GetComponent<DoorTransport>();
@@ -20,6 +20,7 @@ public class door_contoller : MonoBehaviour
     private void Update()
     {
         var multiples = checkForMultiples();
+        //only runs if the two matching doors actually have a target
         if (multiples!=(null,null))
         {
             //wipe door 1
@@ -38,10 +39,13 @@ public class door_contoller : MonoBehaviour
 
     private (GameObject door1,GameObject door2) checkForMultiples()
     {
+        // for each door in the list
         for (int i = 0; i < doorReference.Length; i++)
         {
+            //check against each door left in the list
             for (int j = i+1; j < doorReference.Length; j++)
             {
+                //if they are the same return the two doors
                 if (Targets[j] == Targets[i] &&  Targets[i] != null)
                 {
                     return (doorReference[i], doorReference[j]);

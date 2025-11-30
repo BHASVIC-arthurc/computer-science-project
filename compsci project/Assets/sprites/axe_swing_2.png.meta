@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 2cc4d37f0df681747a1dc56f1fbc1c58
+guid: b9beda45c65a01343a00d960ca907195
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6730405778264477282
-    second: sword_1_0
+      213: -4086619008282926378
+    second: axe_swing_2_0
+  - first:
+      213: 1789126588446665408
+    second: axe_swing_2_1
+  - first:
+      213: -7867254363586799282
+    second: axe_swing_2_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -47,7 +53,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -72,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -113,23 +119,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sword_1_0
+      name: axe_swing_2_0
       rect:
         serializedVersion: 2
-        x: 323
-        y: 239
-        width: 542
-        height: 583
+        x: 98
+        y: 831
+        width: 115
+        height: 108
       alignment: 9
-      pivot: {x: -0.29855427, y: 0.48891944}
+      pivot: {x: -0.3, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e913f489a9bc892a0800000000000000
-      internalID: -6730405778264477282
+      spriteID: 6d2efeee9a96947c0800000000000000
+      internalID: -4086619008282926378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: axe_swing_2_1
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 429
+        width: 157
+        height: 217
+      alignment: 9
+      pivot: {x: -0.3, y: 0.24884792}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cae19a272144d810800000000000000
+      internalID: 1789126588446665408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: axe_swing_2_2
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 27
+        width: 189
+        height: 341
+      alignment: 9
+      pivot: {x: -0.3, y: 0.17197452}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4954ccb6d5e1d290800000000000000
+      internalID: -7867254363586799282
       vertices: []
       indices: 
       edges: []
@@ -138,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 668211993db58ee41b516a1b4bbe4e7e
+    spriteID: 225b3ecc8c132f7438fee4ed107943f0
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sword_1_0: -6730405778264477282
+      axe_swing_2_0: -4086619008282926378
+      axe_swing_2_1: 1789126588446665408
+      axe_swing_2_2: -7867254363586799282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
