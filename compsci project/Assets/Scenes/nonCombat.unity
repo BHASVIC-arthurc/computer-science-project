@@ -1407,7 +1407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 2456625267489585425}
-  theDarkness: {fileID: 0}
+  theDarkness: {fileID: 2262246706371025296}
   upgradeMenu: {fileID: 2456625267489585425}
 --- !u!1 &471895782814132501
 GameObject:

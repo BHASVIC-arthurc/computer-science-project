@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         roomController = GameObject.FindWithTag("room_controller");
-        roomControllerScript = roomController.GetComponent<RoomController>();
+        if (roomController != null) roomControllerScript = roomController.GetComponent<RoomController>();
 
         upgrades.Add(new upgrades("big baller", false, 1, 0.2f));
         upgrades.Add(new upgrades("small baller", false, -1, -0.1f));
@@ -440,5 +440,10 @@ public class PlayerMovement : MonoBehaviour
     public int getHealth()
     {
         return health;
+    }
+
+    public void setEqipedWeapon(int weapon)
+    {
+        equippedWeapon = weapon;
     }
 }

@@ -20,11 +20,13 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
    public void OnPointerEnter(PointerEventData eventData)
    {
+      print("mouse over");
       mouseOver = true;
    }
 
    public void OnPointerExit(PointerEventData eventData)
    {
+      print("mouse gone");
       mouseOver = false;
    }
 }

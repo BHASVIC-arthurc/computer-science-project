@@ -31,8 +31,9 @@ private void Start()
 
     private void Update()
     {
-        if (roomCount == 15)
+        if (roomCount >= 15)
         {
+            print("boss fight time");
             SceneManager.LoadScene("Scenes/boss Fight");
             playerScript.MoveTo(new Vector3(0, 0, 0));
         }

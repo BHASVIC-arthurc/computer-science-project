@@ -15,7 +15,6 @@ public class HUDcontroller : MonoBehaviour
     {
         for (int i = 0; i < health.Length; i++)
         {
-            print(i+1 + " " + playerScript.getHealth() / 10);
             if (playerScript.getHealth() / 10 < i+1)
             {
                 health[i].SetActive(false);

@@ -25,7 +25,7 @@ public class GUIController : MonoBehaviour
                 pause();
             }
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)&&SceneManager.GetActiveScene().name=="nonCombat")
         {
             if (isPaused)
             {
@@ -116,6 +116,11 @@ public class GUIController : MonoBehaviour
     {
         Image image = button.GetComponent<Image>();
         image.color=Color.red;
+    }
+
+    public void changeWeapon(int weapon)
+    {
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().setEqipedWeapon(weapon);
     }
 
 }
