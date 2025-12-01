@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class bossGUIcontroller : MonoBehaviour
 {
+    private float time;
     void Start()
     {
+        gameObject.SetActive(true);
         Time.timeScale = 0;
-        StartCoroutine(bossBattle());
+        bossBattle();
     }
 
-    private IEnumerator bossBattle()
+    private void bossBattle()
     {
         print("starting soon");
-        yield return new WaitForSeconds(3);
-        Time.timeScale = 1;
+        while(time<3)
+        {
+            time += Time.unscaledDeltaTime;
+        }
         gameObject.SetActive(false);
+        Time.timeScale = 1;
     }
 }

@@ -4,10 +4,22 @@ using UnityEngine;
 public class boss : MonoBehaviour
 {
     private float xDistance;
+    [SerializeField] private GameObject eye1, eye2;
+    [SerializeField] private GameObject winScreen;
 
     private void Start()
     {
         StartCoroutine(move());
+    }
+
+    private void Update()
+    {
+        if (eye1 == null && eye2 == null)
+        {
+            Destroy(gameObject);
+            winScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
     private IEnumerator move()
     {

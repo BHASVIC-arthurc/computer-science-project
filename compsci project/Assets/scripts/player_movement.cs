@@ -13,13 +13,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float jumpForce = 11.1f;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private BoxCollider2D bc;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer sr;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask groundLayer,enemyLayer,portalLayer;
+    [SerializeField] private LayerMask groundLayer,enemyLayer,portalLayer,deathLayer;
 
     [Header("Attacks")]
     [SerializeField] private GameObject[] attacks;
@@ -95,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (health <= 0)
+        if (health <= 0 || Physics2D.OverlapCircle(transform.position, 1, deathLayer))
         {
             SceneManager.LoadScene("Scenes/nonCombat");
             transform.position = new Vector3(0, 0, 0);
@@ -206,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        bc.enabled = false;
         //stops player from double dashing
         canDash = false;
         //says they are dashing
@@ -220,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
         dashing = false;
         //sets gravity back to normal
         rb.gravityScale =2f;
+        bc.enabled = true;
         //waits for dash cooldown
         yield return new WaitForSeconds(1);
         //allows player to dash again
@@ -432,5 +435,10 @@ public class PlayerMovement : MonoBehaviour
     public String getCurrentAttack()
     {
         return currentAttack;
+    }
+    
+    public int getHealth()
+    {
+        return health;
     }
 }
