@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -18,6 +19,7 @@ public class RoomController : MonoBehaviour
     private int randomRoom;
     private Vector3 roomEntrancePos;
     private int count;
+    private int roomCount=0;
     [SerializeField] private LayerMask roomLayer;
 
 private void Start()
@@ -27,6 +29,14 @@ private void Start()
         new_room(null);
     }
 
+    private void Update()
+    {
+        if (roomCount == 15)
+        {
+            SceneManager.LoadScene("Scenes/boss Fight");
+            playerScript.MoveTo(new Vector3(0, 0, 0));
+        }
+    }
     private GameObject new_room(GameObject exitDoor)
     {
         Vector3 spawnLocation;
@@ -86,6 +96,7 @@ private void Start()
 
         if (count!=20){
             currentRoom = Instantiate(roomPrefab, spawnLocation, roomPrefab.transform.rotation);
+            roomCount++;
             roomScript = currentRoom.GetComponent<RoomVariables>();
             if (exitDoor != null)
             {

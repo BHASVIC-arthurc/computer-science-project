@@ -14,6 +14,8 @@ TagManager:
   - enemy
   - wall
   - bullet
+  - guy
+  - guy2
   layers:
   - Default
   - TransparentFX
@@ -27,11 +29,11 @@ TagManager:
   - door
   - attack
   - enemy
-  - 
-  - 
-  - 
-  - 
-  - 
+  - portal
+  - guy
+  - guy2
+  - bullet
+  - death
   - 
   - 
   - 

@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Player;
+    
     [Header("Movement")]
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float jumpForce = 11.1f;
@@ -17,8 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
 
     [Header("Layers")]
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask groundLayer,enemyLayer,portalLayer;
 
     [Header("Attacks")]
     [SerializeField] private GameObject[] attacks;
@@ -32,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Upgrades")]
     [SerializeField] private List<upgrades> upgrades = new List<upgrades>();
+    
+    [Header("scenes")]
+    [SerializeField]
+    Scene combatScene,mainMenuScene,nonCombatScene;
+    
 
     private bool canLightAttack = true;
     private bool canHeavyAttack = true;
@@ -59,7 +65,18 @@ public class PlayerMovement : MonoBehaviour
     
     
     
-
+    private void Awake()
+    {
+        if (Player == null)
+        {
+            Player = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -82,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         {
             SceneManager.LoadScene("Scenes/nonCombat");
             transform.position = new Vector3(0, 0, 0);
+            sr.enabled = true;
+            health = 100;
         }
         upgradeHandler();
         //the first thing the code check is if the player is on the ground
@@ -98,21 +117,6 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(Dash());
             }
         }
-
-
-        if (Input.GetKeyDown("1"))
-        {
-            equippedWeapon = 1;
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            equippedWeapon = 2;
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            equippedWeapon = 3;
-        }
-
         //starts or continous attack timer
         if (Input.GetMouseButton(0))
         {
@@ -155,6 +159,11 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapCircle(transform.position, 0.6100233f/2, enemyLayer)&&!isHit)
         {
             StartCoroutine(GetHit());
+        }
+
+        if (Physics2D.OverlapCircle(transform.position, 0.6100233f / 2, portalLayer)&&Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadScene("Scenes/CombatWorld");
         }
 }
     private void Move()
