@@ -1,11 +1,12 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu,theDarkness;
+    [SerializeField] private GameObject pauseMenu,theDarkness,upgradeMenu;
     private Image lightLevel;
     private GameObject activeMenu;
     private bool isPaused;
@@ -22,6 +23,17 @@ public class GUIController : MonoBehaviour
             else if (!isPaused)
             {
                 pause();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (isPaused)
+            {
+                unpause();
+            }
+            else
+            {
+                openUpgrades();
             }
         }
     }
@@ -42,6 +54,14 @@ public class GUIController : MonoBehaviour
         Time.timeScale = 1;
         activeMenu.SetActive(false);
         activeMenu = null;
+    }
+
+    public void openUpgrades()
+    {
+        isPaused=true;
+        Time.timeScale = 0;
+        upgradeMenu.SetActive(true);
+        activeMenu = upgradeMenu;
     }
 
     public void SaveAndQuit()
@@ -76,6 +96,26 @@ public class GUIController : MonoBehaviour
     public void changeVolume(Slider volumeSlider)
     {
         PlayerPrefs.SetFloat("volume", volumeSlider.value);
+    }
+
+    public void equip(int index)
+    {
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().getUpgrades(index).setEqiped(true);
+    }
+    public void equip2(GameObject button)
+    {
+        Image image = button.GetComponent<Image>();
+        image.color=Color.yellowNice;
+    }
+
+    public void uneqip(int index)
+    {
+        GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().getUpgrades(index).setEqiped(false);
+    }
+    public void uneqip2(GameObject button)
+    {
+        Image image = button.GetComponent<Image>();
+        image.color=Color.red;
     }
 
 }

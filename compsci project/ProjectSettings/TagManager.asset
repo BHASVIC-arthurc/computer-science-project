@@ -11,6 +11,9 @@ TagManager:
   - jump_boost
   - room_controller
   - attack
+  - enemy
+  - wall
+  - bullet
   layers:
   - Default
   - TransparentFX
@@ -23,7 +26,7 @@ TagManager:
   - platform
   - door
   - attack
-  - 
+  - enemy
   - 
   - 
   - 

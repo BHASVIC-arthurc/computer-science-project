@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatWorld.unity
     guid: a394a8e30cd3a1d4f81a6fb6b4a4882e
+  - enabled: 1
+    path: Assets/Scenes/nonCombat.unity
+    guid: 2761309f8dd03c544a0691bad7e1d921
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

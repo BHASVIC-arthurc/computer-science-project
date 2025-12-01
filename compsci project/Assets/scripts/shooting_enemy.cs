@@ -1,51 +1,46 @@
 using System.Collections;
 using UnityEngine;
 
-public class WalkingEnemy : MonoBehaviour
+public class shooting_enemy : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb;
-    private int direction=1;
-    [SerializeField] private LayerMask weaponLayer,groundLayer;
-    
+    [SerializeField] GameObject projectile;
     [SerializeField] private int health = 10;
+    [SerializeField] private LayerMask weaponLayer;
     private bool isHit;
     private GameObject player;
     private PlayerMovement playerScript;
-
-
+    private bool canShoot=true;
+    
+    
+    
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerMovement>();
-    }
-    
-    void Update()
-    {
-        rb.linearVelocity = new Vector2(3*direction,0);
+        StartCoroutine(shoot());
         
+    }
+
+    private void Update()
+    {
         if (Physics2D.OverlapCircle(transform.position, 1, weaponLayer)&&!isHit)
         {
             StartCoroutine(GetHit());
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
-
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
-        
-        if (Physics2D.OverlapPoint(new Vector2(transform.position.x+1*direction,transform.position.y),groundLayer)||!Physics2D.OverlapPoint(new Vector2(transform.position.x+1*direction,transform.position.y-1),groundLayer))
-        {
-            direction *= -1;
+    }
+    private IEnumerator shoot()
+    {
+        while(true)
+        { 
+            if(canShoot) Instantiate(projectile, new Vector3(transform.position.x,transform.position.y,-1), transform.rotation);
+        yield return new WaitForSeconds(Random.Range(1.5f,3f));
         }
     }
     
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("door"))
-        {
-           direction *= -1;
-        }
-    }
     private IEnumerator GetHit()
     {
 
@@ -83,10 +78,9 @@ public class WalkingEnemy : MonoBehaviour
 
     private IEnumerator stun()
     {
-        int tempdirect=direction;
-        direction = 0;
+        canShoot = false;
         yield return new WaitForSeconds(0.5f);
-        direction = tempdirect;
+        canShoot = true;
     }
     
 }

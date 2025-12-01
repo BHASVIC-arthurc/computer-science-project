@@ -1,31 +1,89 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]  private float acceleration;
-    [SerializeField]  private float jumpForce;
+    [Header("Movement")]
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float jumpForce = 11.1f;
     [SerializeField] private Rigidbody2D rb;
+
+    [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer sr;
+
+    [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
+
+    [Header("Attacks")]
     [SerializeField] private GameObject[] attacks;
-    //sword=1 axe=2 spear=3
-    private int equipedWeapon=2;
-    private float xSpeed,ySpeed,attackTimer;
-    private bool grounded = true,canDash=true,dashing;
+    [SerializeField] private float[] attackTimes;
+    [SerializeField] private float[] attackCooldowns;
+    [SerializeField] private GameObject bolt;
+    private int[] attackDamage = { 2, 6, 4, 9, 3, 6 };
+
+    [Header("Player Stats")]
+    [SerializeField] private int health = 100;
+
+    [Header("Upgrades")]
+    [SerializeField] private List<upgrades> upgrades = new List<upgrades>();
+
+    private bool canLightAttack = true;
+    private bool canHeavyAttack = true;
+    private bool grounded = true;
+    private bool isHit;
+    private bool canDash = true;
+    private bool dashing;
+    private bool doubleDamage;
+    private bool canCrit;
+    private bool canStun;
+    private bool canShoot;
+    private bool sword1;
+    private bool sword2;
     
+    private float attackTimer;
+    private float xSpeed;
+
+    private int equippedWeapon = 1; // 1=sword,2=axe,3=spear
+
     private GameObject roomController;
     private RoomController roomControllerScript;
 
+    private String currentAttack;
+    
+    
+    
+    
+
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         roomController = GameObject.FindWithTag("room_controller");
         roomControllerScript = roomController.GetComponent<RoomController>();
+
+        upgrades.Add(new upgrades("big baller", false, 1, 0.2f));
+        upgrades.Add(new upgrades("small baller", false, -1, -0.1f));
+        upgrades.Add(new upgrades("berserker", false, 2, 2));
+        upgrades.Add(new upgrades("earthbreaker axe", false, 0, 0));
+        upgrades.Add(new upgrades("thunder spear", false, 0, 0));
+        upgrades.Add(new upgrades("reinforced spear", false, 0, 0));
+        
     }
+
     void Update()
     {
+
+        if (health <= 0)
+        {
+            SceneManager.LoadScene("Scenes/nonCombat");
+            transform.position = new Vector3(0, 0, 0);
+        }
+        upgradeHandler();
         //the first thing the code check is if the player is on the ground
         IsGrounded();
         //this stops the player from changing anything when the player is dashing
@@ -41,28 +99,64 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+
+        if (Input.GetKeyDown("1"))
+        {
+            equippedWeapon = 1;
+        }
+        else if (Input.GetKeyDown("2"))
+        {
+            equippedWeapon = 2;
+        }
+        else if (Input.GetKeyDown("3"))
+        {
+            equippedWeapon = 3;
+        }
+
         //starts or continous attack timer
         if (Input.GetMouseButton(0))
         {
-            attackTimer+=1*Time.deltaTime;
+            attackTimer += 1 * Time.deltaTime;
         }
 
         //when released do a heavy or light attack
         if (!Input.GetMouseButton(0))
         {
-            if (attackTimer > 1)
+            if (attackTimer > 0.3f)
             {
                 attackTimer = 0;
-                StartCoroutine(heavyAttack());
+                if(canHeavyAttack) StartCoroutine(heavyAttack());
             }
             else if (attackTimer > 0)
             {
                 attackTimer = 0;
-                StartCoroutine(lightAttack());
+                if(canLightAttack) StartCoroutine(lightAttack());
             }
         }
 
-    }
+        if (xSpeed > 0)
+        {
+            for (int i=0;i<attacks.Length;i++)
+            {
+                Transform attackLocation = attacks[i].transform;
+                if(attackLocation.localScale.x<0) attackLocation.localScale = new Vector3(attackLocation.localScale.x*-1,attackLocation.localScale.y,attackLocation.localScale.z);
+            }
+        }
+
+        else if (xSpeed < 0)
+        {
+            for (int i=0;i<attacks.Length;i++)
+            {
+                Transform attackLocation = attacks[i].transform;
+                if(attackLocation.localScale.x>0) attackLocation.localScale = new Vector3(attackLocation.localScale.x*-1,attackLocation.localScale.y,attackLocation.localScale.z);
+            }
+        }
+
+        if (Physics2D.OverlapCircle(transform.position, 0.6100233f/2, enemyLayer)&&!isHit)
+        {
+            StartCoroutine(GetHit());
+        }
+}
     private void Move()
     {
         //sets x_speed to acceleration timsed by the direction you're facing
@@ -140,6 +234,7 @@ public class PlayerMovement : MonoBehaviour
             else 
                 MoveTo(exitScript.GetTargetDoor().transform.position);
         }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -160,17 +255,173 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator lightAttack()
     {
-        print("light attack");
-        attacks[equipedWeapon*2-2].SetActive(true);
-        yield return new WaitForSeconds(0.2f);
-        attacks[equipedWeapon*2-2].SetActive(false);
+        canLightAttack = false;
+        currentAttack="light";
+        attacks[equippedWeapon*2-2].SetActive(true);
+        yield return new WaitForSeconds(attackTimes[equippedWeapon*2-2]);
+        attacks[equippedWeapon*2-2].SetActive(false);
+        yield return new WaitForSeconds(attackCooldowns[equippedWeapon*2-2]);
+        if (equippedWeapon == 3&&canShoot)
+        {
+            Instantiate(bolt, transform.position, transform.localRotation);
+        }
+        canLightAttack = true;
     }
     
     private IEnumerator heavyAttack()
     {
-        print("heavy attack");
-        attacks[equipedWeapon*2-1].SetActive(true);
-        yield return new WaitForSeconds(0.2f);
-        attacks[equipedWeapon*2-1].SetActive(false);
+        canHeavyAttack=false; 
+        currentAttack="heavy";
+        attacks[equippedWeapon*2-1].SetActive(true);
+        yield return new WaitForSeconds(attackTimes[equippedWeapon*2-1]);
+        attacks[equippedWeapon*2-1].SetActive(false);
+        yield return new WaitForSeconds(attackCooldowns[equippedWeapon*2-1]);
+        canHeavyAttack = true;
+    }
+
+    private IEnumerator GetHit()
+    {
+
+            isHit = true;
+            if(doubleDamage) health-=20;
+            else health-=10;
+            for (int i = 0; i <= 5; i++)
+            {
+                sr.enabled = false;
+                yield return new WaitForSeconds(0.1f);
+                sr.enabled = true;
+                yield return new WaitForSeconds(0.1f);
+            }
+            isHit=false;
+    }
+
+    public upgrades getUpgrades(int index)
+    {
+        return upgrades[index];
+    }
+
+
+    private void upgradeHandler()
+    {
+        if (upgrades[0].getEqipped())
+        {
+            if(!sword1)
+            {
+                sword1 = true;
+                for (int i = 0; i < 6; i++)
+                {
+                    attackDamage[i] += 1;
+                    attackCooldowns[i] += 0.2f;
+                }
+            }
+        }
+        
+        if (upgrades[1].getEqipped())
+        {
+            if (!sword2)
+            {
+                sword2 = true;
+                for (int i = 0; i < 6; i++)
+                {
+                    attackDamage[i] -= 1;
+                    attackCooldowns[i] -= 0.1f;
+                }
+            }
+        }
+        
+        if (upgrades[2].getEqipped())
+        {
+            doubleDamage = true;
+        }
+        
+        if (upgrades[3].getEqipped())
+        {
+            canStun = true;
+        }
+        
+        if (upgrades[4].getEqipped())
+        {
+            canShoot =  true;
+        }
+        
+        if (upgrades[5].getEqipped())
+        {
+            canCrit = true;
+        }
+        
+        if (!upgrades[0].getEqipped())
+        {
+            if(sword1)
+            {
+                sword1 = false;
+                for (int i = 0; i < 6; i++)
+                {
+                    attackDamage[i] -= 1;
+                    attackCooldowns[i] -= 0.2f;
+                }
+            }
+        }
+        
+        if (!upgrades[1].getEqipped())
+        {
+            if (sword2)
+            {
+                sword2 = false;
+                for (int i = 0; i < 6; i++)
+                {
+                    attackDamage[i] += 1;
+                    attackCooldowns[i] += 0.1f;
+                }
+            }
+        }
+        
+        if (!upgrades[2].getEqipped())
+        {
+            doubleDamage = false;
+        }
+        
+        if (!upgrades[3].getEqipped())
+        {
+            canStun = false;
+        }
+        
+        if (!upgrades[4].getEqipped())
+        {
+            canShoot =  false;
+        }
+        
+        if (!upgrades[5].getEqipped())
+        {
+            canCrit = false;
+        }
+        
+        
+    }
+    public bool getCanCrit()
+    {
+        return canCrit;
+    }
+    public bool getDoubleDamage()
+    {
+        return doubleDamage;
+    }
+    public bool getCanStun()
+    {
+        return canStun;
+    }
+
+    public int getAttackDamage(int index)
+    {
+        return attackDamage[index];
+    }
+    
+    public int getEqipedWeapon()
+    {
+        return equippedWeapon;
+    }
+
+    public String getCurrentAttack()
+    {
+        return currentAttack;
     }
 }
