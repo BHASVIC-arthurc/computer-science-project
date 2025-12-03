@@ -294,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
             isHit = true;
-            if(doubleDamage) health-=20;
+            if(doubleDamage && equippedWeapon==2) health-=20;
             else health-=10;
             for (int i = 0; i <= 5; i++)
             {
