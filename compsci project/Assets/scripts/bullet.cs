@@ -8,9 +8,11 @@ public class bullet : MonoBehaviour
     [SerializeField] private String[] tags;
     [SerializeField] private Rigidbody2D rb; 
     private float speed=7f;
+    private Transform parent;
 
     void Start()
     {
+        parent = transform.parent;
         player = GameObject.FindWithTag("Player");
         target = player.transform.position;
         transform.LookAt(target);
@@ -22,7 +24,7 @@ public class bullet : MonoBehaviour
     {
         foreach (String tag in tags)
         {
-            if (collision.gameObject.CompareTag(tag))
+            if (collision.gameObject.CompareTag(tag)&&collision.gameObject!=parent.gameObject)
             {
                 Destroy(gameObject);
             }

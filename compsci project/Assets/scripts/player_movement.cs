@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     private String currentAttack;
     
+    bool invincible;
     
     
     
@@ -95,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.X)) invincible = !invincible;
         if (health <= 0 || Physics2D.OverlapCircle(transform.position, 1, deathLayer))
         {
             SceneManager.LoadScene("Scenes/nonCombat");
@@ -157,12 +158,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Physics2D.OverlapCircle(transform.position, 0.6100233f/2, enemyLayer)&&!isHit)
+        if (Physics2D.OverlapArea(new Vector2(transform.position.x+0.6100233f / 2,transform.position.y+1.138727f/2),new Vector2(transform.position.x-0.6100233f / 2,transform.position.y-1.138727f/2), enemyLayer)&& !isHit && !invincible)
         {
             StartCoroutine(GetHit());
         }
 
-        if (Physics2D.OverlapCircle(transform.position, 0.6100233f / 2, portalLayer)&&Input.GetKeyDown(KeyCode.Q))
+        if (Physics2D.OverlapCircle(transform.position, 0.6100233f/2, portalLayer)&&Input.GetKeyDown(KeyCode.Q))
         {
             SceneManager.LoadScene("Scenes/CombatWorld");
         }
@@ -207,7 +208,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        bc.enabled = false;
         //stops player from double dashing
         canDash = false;
         //says they are dashing
@@ -222,7 +222,6 @@ public class PlayerMovement : MonoBehaviour
         dashing = false;
         //sets gravity back to normal
         rb.gravityScale =2f;
-        bc.enabled = true;
         //waits for dash cooldown
         yield return new WaitForSeconds(1);
         //allows player to dash again

@@ -36,7 +36,7 @@ public class shooting_enemy : MonoBehaviour
     {
         while(true)
         { 
-            if(canShoot) Instantiate(projectile, new Vector3(transform.position.x,transform.position.y,-1), transform.rotation);
+            if(canShoot) Instantiate(projectile, new Vector3(transform.position.x,transform.position.y,-1), transform.rotation,gameObject.transform);
         yield return new WaitForSeconds(Random.Range(1.5f,3f));
         }
     }

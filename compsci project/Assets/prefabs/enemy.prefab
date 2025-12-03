@@ -111,7 +111,7 @@ MonoBehaviour:
     m_Bits: 1024
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   health: 10
 --- !u!61 &4282309032705102704
 BoxCollider2D:

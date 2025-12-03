@@ -19,7 +19,7 @@ public class RoomController : MonoBehaviour
     private int randomRoom;
     private Vector3 roomEntrancePos;
     private int count;
-    private int roomCount=0;
+    private int roomCount;
     [SerializeField] private LayerMask roomLayer;
 
 private void Start()
@@ -27,10 +27,13 @@ private void Start()
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerMovement>();
         new_room(null);
+        roomCount = 0;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C)) roomCount++;
+        print(roomCount);
         if (roomCount >= 15)
         {
             print("boss fight time");
@@ -97,7 +100,6 @@ private void Start()
 
         if (count!=20){
             currentRoom = Instantiate(roomPrefab, spawnLocation, roomPrefab.transform.rotation);
-            roomCount++;
             roomScript = currentRoom.GetComponent<RoomVariables>();
             if (exitDoor != null)
             {
@@ -106,6 +108,7 @@ private void Start()
             else return null;
 
             playerScript.MoveTo(entranceDoor.transform.position);
+            roomCount++;
             return entranceDoor;
         }
         return null;
