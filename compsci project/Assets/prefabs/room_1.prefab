@@ -2767,6 +2767,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: guy2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4611490535264313700, guid: 0025f9fc12b4e4c41b86e0e68403607c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2788,6 +2792,14 @@ PrefabInstance:
     - target: {fileID: 1999390351761611546, guid: 0c069f71a20c66f46a48201bdc53e2eb, type: 3}
       propertyPath: m_Name
       value: enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999390351761611546, guid: 0c069f71a20c66f46a48201bdc53e2eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5097357133111059659, guid: 0c069f71a20c66f46a48201bdc53e2eb, type: 3}
+      propertyPath: m_Mass
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5198275806568676061, guid: 0c069f71a20c66f46a48201bdc53e2eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2890,6 +2902,10 @@ PrefabInstance:
     - target: {fileID: 4611490535264313700, guid: 0025f9fc12b4e4c41b86e0e68403607c, type: 3}
       propertyPath: m_Name
       value: guy2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611490535264313700, guid: 0025f9fc12b4e4c41b86e0e68403607c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
