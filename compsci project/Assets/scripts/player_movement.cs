@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -63,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
 
     private String currentAttack;
     
-    bool invincible;
     
     
     
@@ -96,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X)) invincible = !invincible;
         if (health <= 0 || Physics2D.OverlapCircle(transform.position, 1, deathLayer))
         {
             SceneManager.LoadScene("Scenes/nonCombat");
@@ -158,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Physics2D.OverlapArea(new Vector2(transform.position.x+0.6100233f / 2,transform.position.y+1.138727f/2),new Vector2(transform.position.x-0.6100233f / 2,transform.position.y-1.138727f/2), enemyLayer)&& !isHit && !invincible)
+        if (Physics2D.OverlapArea(new Vector2(transform.position.x+0.6100233f / 2,transform.position.y+1.138727f/2),new Vector2(transform.position.x-0.6100233f / 2,transform.position.y-1.138727f/2), enemyLayer)&& !isHit)
         {
             StartCoroutine(GetHit());
         }
@@ -167,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SceneManager.LoadScene("Scenes/CombatWorld");
         }
-}
+    }
     private void Move()
     {
         //sets x_speed to acceleration timsed by the direction you're facing

@@ -33,7 +33,7 @@ public class GUIcontrollerMainMenu : MonoBehaviour
 
     public void startGame()
     {
-        SceneManager.LoadScene("Scenes/CombatWorld");
+        SceneManager.LoadScene("CombatWorld");
     }
 
 }

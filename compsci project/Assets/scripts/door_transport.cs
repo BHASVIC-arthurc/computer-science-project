@@ -62,7 +62,6 @@ public class DoorTransport : MonoBehaviour
             case "Bottom Right":
                 if (Physics2D.OverlapCircle(new Vector2(transform.position.x + 10, transform.position.y - 10), 5, wallLayer)) canSpawn1 = false;
                 break;
-
         }
 
         //for the tall room
@@ -80,7 +79,6 @@ public class DoorTransport : MonoBehaviour
             case "Bottom Right":
                 if (Physics2D.OverlapCircle(new Vector2(transform.position.x + 10, transform.position.y - 20), 5, wallLayer)) canSpawn2 = false;
                 break;
-
         }
 
         //for the long room
@@ -98,7 +96,6 @@ public class DoorTransport : MonoBehaviour
             case "Bottom Right":
                 if (Physics2D.OverlapCircle(new Vector2(transform.position.x + 20, transform.position.y - 10), 5, wallLayer)) canSpawn3 = false;
                 break;
-
         }
 
     }
